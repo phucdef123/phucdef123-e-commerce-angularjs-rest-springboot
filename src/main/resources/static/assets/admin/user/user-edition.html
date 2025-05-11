@@ -1,0 +1,45 @@
+<!-- User Edition Content -->
+<div id="userEdition">
+    <div class="card border-0 mb-4">
+        <div class="card-body">
+            <div class="row mb-3">
+                <div class="col-sm-10 offset-sm-1 mt-2">
+                    <input type="text" class="form-control " placeholder="Username"
+                           ng-model="form.username" readonly>
+                </div>
+            </div>
+<!--            <div class="row mb-3">-->
+<!--                <div class="col-sm-10 offset-sm-1 mt-2">-->
+<!--                    <div class="inputbox">-->
+<!--                        <input required="required" type="password" >-->
+<!--                        <span>Password</span>-->
+<!--                        <i></i>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+            <div class="row mb-3">
+                <div class="col-sm-5 offset-sm-1 mt-2">
+                    <input type="email" class="form-control " placeholder="Email"
+                           ng-model="form.userProfile.email" readonly>
+                </div>
+                <div class="col-sm-5 mt-2">
+                    <input type="text" class="form-control " placeholder="Fullname"
+                           ng-model="form.userProfile.fullname" readonly>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-sm-10 offset-sm-1 mt-2">
+                    <div ng-repeat="role in authorities">
+                        <input type="checkbox" ng-checked="form.authorities.includes(role)" ng-click="toggleAuthority(role)"> {{ role }}
+                    </div>
+                </div>
+            </div>
+            <div class="row ">
+                <div class="col-sm-6 offset-sm-6 d-flex justify-content-end p-5">
+                    <button type="button" class="btn btn-primary text-white me-5 col-sm-4" ng-click="update()">Update</button>
+<!--                    <button type="button" class="btn btn-outline-primary col-sm-4">Delete</button>-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/layout :: dyanmic(~{::body})}">
+
+<head>
+    <meta charset="utf-8">
+    <title>Shopdee - Vegetable Website</title>
+</head>
+
+    <body ng-app="userProfileApp" ng-controller="userProfileCtrl">
+    <!-- Single Page Header start -->
+    <div class="container-fluid page-header "></div>
+    <!-- Single Page Header End -->
+
+        <!-- Account Management Start -->
+        <div class="container-fluid py-5">
+            <div class="container py-5">
+                <div class="text-center">
+                    <h4 class="text-primary">Quản lý tài khoản</h4>
+                    <h1 class="display-5 mb-5 text-dark">Thông tin tài khoản và đơn hàng</h1>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h3 class="text-dark">Thông tin tài khoản</h3>
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Tên đăng nhập</label>
+                            <input type="text" ng-model="user.username" class="form-control" id="username" placeholder="Tên đăng nhập">
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" ng-model="user.userProfile.email" class="form-control" id="email" placeholder="Email">
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Mật khẩu</label>
+                            <input type="password" ng-model="newPassword" class="form-control" id="password" placeholder="Nhập mật khẩu mới">
+                        </div>
+                        <div class="mb-3">
+                            <label for="fullname" class="form-label">Họ và tên</label>
+                            <input type="text" ng-model="user.userProfile.fullname" class="form-control" id="fullname" placeholder="Họ và tên">
+                        </div>
+                        <button type="submit" class="btn btn-primary mt-2" ng-click="updateProfile()">Cập nhật thông tin</button>
+                    </div>
+                    <div class="col-md-6">
+                        <h3 class="text-dark">Tình trạng đơn hàng</h3>
+                        <div class="col-12 text-center p-5" ng-if="listOrders.length == 0">
+                            <h4 class="text-muted mt-5">Không có đơn hàng nào.</h4>
+                        </div>
+                        <div class="list-group" ng-if="listOrders">
+                            <a ng-repeat="order in listOrders" ng-click="showOrder(order.id)" class="list-group-item list-group-item-action" data-bs-toggle="modal" data-bs-target="#editOrderModal">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h5 class="mb-1">Đơn hàng #<span>{{order.id}}</span></h5>
+                                    <small>{{formatStatus(order.status)}}</small>
+                                </div>
+                                <p class="mb-1">{{order.createDate}}</p>
+                                <small>Tổng tiền: <span>{{formatPrice(order.total)}}</span></small>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Account Management End -->
+
+        <!-- Edit Modal Order Start -->
+
+        <div class="modal fade" id="editOrderModal" tabindex="-1">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Chỉnh Sửa Đơn Hàng</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" name="orderId"/>
+    
+                        <!-- Thông tin chung -->
+                        <div class="row">
+                            <div class="mb-3 col-sm-6 d-flex align-items-center gap-2">
+                                <label class="form-label text-nowrap mb-0">ID Đơn hàng: </label>
+                                <p class="form-control-plaintext">#<span>{{orderShow.id}}</span></p>
+                            </div>
+        
+                            <div class="mb-3 col-sm-6 d-flex align-items-center gap-1">
+                                <label class="form-label text-nowrap mb-0">Người đặt hàng:</label>
+                                <p class="form-control-plaintext" >{{orderShow.user.userProfile.fullname}}</p>
+                            </div>
+                        </div>
+    
+                        <div class="row">
+                            <div class="mb-3 col-sm-6 d-flex align-items-center gap-2">
+                                <label class="form-label text-nowrap mb-0">Ngày đặt:</label>
+                                <p class="form-control-plaintext " >{{orderShow.createDate}}</p>
+                            </div>
+                        
+                            <div class="mb-3 col-sm-6 d-flex align-items-center gap-2">
+                                <label class="form-label text-nowrap mb-0">Địa chỉ nhận hàng:</label>
+                                <p class="form-control-plaintext " >{{orderShow.address}}</p>
+                            </div>
+                        </div>
+                        
+    
+                        <!-- Trạng thái đơn hàng -->
+                        <div class="mb-3 col-sm-6 d-flex align-items-center gap-2">
+                            <label class="form-label text-nowrap mb-0">Trạng thái đơn hàng:</label>
+                            <p class="form-control-plaintext " >{{formatStatus(orderShow.status)}}</p>
+                        </div>
+    
+                        <!-- Danh sách sản phẩm -->
+                        <h5 class="mt-4">Chi Tiết Đơn Hàng</h5>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Tên Sản Phẩm</th>
+                                    <th>Giá</th>
+                                    <th>Số Lượng</th>
+                                    <th>Tổng</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="od in orderShow.orderDetails">
+                                    <td >{{od.product.name}}</td>
+                                    <td >{{od.price}}</td>
+                                    <td >{{od.quantity}}</td>
+                                    <td class="subtotal" >{{od.price * od.quantity}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <h4 class="text-end">Tổng Cộng: <span id="totalAmount" >{{formatPrice(orderShow.total)}}</span> VND</h4>
+                        
+<!--                        <div class="modal-footer">-->
+<!--                            <div class="button-delete">-->
+<!--                                <button class="noselect"><span class="text">Hủy đơn hàng</span><span class="icon"><svg xmlns="http://www.w3.org/2000/svg"-->
+<!--                                    width="24" height="24" viewBox="0 0 24 24">-->
+<!--                                    <path-->
+<!--                                        d="M24 20.188l-8.315-8.209 8.2-8.282-3.697-3.697-8.212 8.318-8.31-8.203-3.666 3.666 8.321 8.24-8.206 8.313 3.666 3.666 8.237-8.318 8.285 8.203z">-->
+<!--                                    </path>-->
+<!--                                </svg></span>-->
+<!--                                </button>-->
+<!--                            </div>-->
+<!--                        </div>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Order Detail Modal -->
+        <div class="modal fade" id="orderDetailModal" tabindex="-1" aria-labelledby="orderDetailModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="orderDetailModalLabel">Chi tiết đơn hàng</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p><strong>Mã đơn hàng:</strong> <span id="orderId"></span></p>
+                        <p><strong>Ngày đặt:</strong> <span id="orderDate"></span></p>
+                        <p><strong>Tổng tiền:</strong> <span id="orderTotal"></span></p>
+                        <p><strong>Tình trạng:</strong> <span id="orderStatus"></span></p>
+                        <!-- Add more order details as needed -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            function showOrderDetails(orderId, orderDate, orderTotal, orderStatus) {
+                document.getElementById('orderId').innerText = orderId;
+                document.getElementById('orderDate').innerText = orderDate;
+                document.getElementById('orderTotal').innerText = orderTotal;
+                document.getElementById('orderStatus').innerText = orderStatus;
+            }
+        </script>
+    </body>
+
+</html>

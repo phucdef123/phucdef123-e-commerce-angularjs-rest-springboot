@@ -1,0 +1,35 @@
+<!-- Home Content -->
+<div id="home">
+    <div class=" p-3 rounded row">
+        <div class="col-sm-7 bg-white rounded-3">
+            <h5 class="ms-auto d-flex mt-3 justify-content-center">Tổng doanh thu</h5>
+<!--            <div class="w-25 ms-auto text-end p-1">-->
+                <div class="row g-2">
+                    <div class="col">
+                        <input type="date" class="form-control" ng-model="startDate">
+                    </div>
+                    <div class="col">
+                        <input type="date" class="form-control" ng-model="endDate">
+                    </div>
+                    <div class="col">
+                        <button class="btn btn-primary" ng-click="loadRevenueByDateRange()">Xem doanh thu</button>
+                    </div>
+                </div>
+<!--            </div>-->
+            <canvas id="myChart" class="w-100"></canvas>
+<!--            <p class="text-end mt-3">Tổng: <span>100.000.000</span> VND</p>-->
+        </div>
+
+        <div class="col-sm-4 ms-auto rounded-3 bg-white d-flex justify-content-center align-items-center flex-column">
+            <h5>Tổng số lượng</h5>
+            <canvas id="donutChart" class="w-100"></canvas>
+<!--            <p class="text-end mt-4">Tổng: <span>10000</span></p>-->
+        </div>
+        <div class="bg-white p-3 mt-5 rounded">
+            <canvas id="monthlyRevenueLineChart" width="400" height="200"></canvas>
+            <!--            <canvas id="vipCustomersChart"></canvas>-->
+        </div>
+    </div>
+
+
+</div>

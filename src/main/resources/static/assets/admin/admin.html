@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <title>Shopdee - Admin Website</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Raleway:wght@600;800&display=swap"
+          rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="/lib/lightbox/css/lightbox.min.css" rel="stylesheet">
+    <link href="/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="/css/style.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
+</head>
+
+<body ng-app="app" style="background-color: rgb(248, 248, 248);">
+
+<!-- Spinner Start -->
+<div id="spinner"
+     class="show w-100 vh-100 bg-white position-fixed translate-middle top-50 start-50  d-flex align-items-center justify-content-center">
+    <div class="spinner-grow text-primary" role="status"></div>
+</div>
+<!-- Spinner End -->
+
+<!-- Sidebar -->
+<aside id="sidebar" ng-controller="MainController"
+       class="col-lg-3 col-md-4 col-sm-12 bg-white position-fixed d-none d-md-block h-100 overflow-auto shadow-sm border-end">
+    <ul class="nav flex-column px-3 mx-3">
+        <li class="nav-item my-3 text-muted">
+            <h3>DANH MỤC</h3>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link d-flex align-items-center" href="#!/home" ng-class="{ 'active': isActive('/home') }">
+                <i class="fas fa-home me-2"></i> Trang chủ
+            </a>
+        </li>
+
+        <li class="nav-item mt-3 text-muted">PRODUCTS</li>
+        <li class="nav-item">
+            <a class="nav-link d-flex align-items-center" href="#!/products/edit" ng-class="{ 'active': isActive('/products/edit') }">
+                <i class="fas fa-edit me-2"></i> Product Edition
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link d-flex align-items-center" href="#!/products/list" ng-class="{ 'active': isActive('/products/list') }">
+                <i class="fas fa-boxes me-2"></i> Product List
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link d-flex align-items-center" ng-class="{ 'active': isActive('/categories') }"
+               href="#!/categories">
+                <i class="fas fa-tags me-2"></i> Category
+            </a>
+        </li>
+
+        <li class="nav-item mt-3 text-muted">USERS</li>
+        <li class="nav-item">
+            <a class="nav-link d-flex align-items-center" href="#!/users/edit" ng-class="{ 'active': isActive('/users/edit') }">
+                <i class="fas fa-user-edit me-2"></i> User Edition
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link d-flex align-items-center" href="#!/users/list" ng-class="{ 'active': isActive('/users/list') }">
+                <i class="fas fa-users me-2"></i> User List
+            </a>
+        </li>
+
+        <li class="nav-item mt-3 text-muted">ORDERS</li>
+        <li class="nav-item">
+            <a class="nav-link d-flex align-items-center" href="#!orders">
+                <i class="fas fa-shopping-cart me-2"></i> Order List
+            </a>
+        </li>
+    </ul>
+</aside>
+
+<!-- Main Content (Article) -->
+<article id="main-content" class="col-lg-9 col-md-8 col-sm-12 offset-lg-3 offset-md-4 p-3">
+    <div ng-controller="MainController" class="container card border-0 shadow-sm mb-4">
+        <div class="d-flex align-items-center justify-content-center">
+
+            <div class="menu">
+                <a href="/" class="link">
+                        <span class="link-icon">
+                            <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="192"
+                                    height="192"
+                                    fill="currentColor"
+                                    viewBox="0 0 256 256"
+                            >
+                            <rect width="256" height="256" fill="none"></rect>
+                            <path
+                                    d="M213.3815,109.61945,133.376,36.88436a8,8,0,0,0-10.76339.00036l-79.9945,72.73477A8,8,0,0,0,40,115.53855V208a8,8,0,0,0,8,8H208a8,8,0,0,0,8-8V115.53887A8,8,0,0,0,213.3815,109.61945Z"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="16"
+                            ></path>
+                            </svg>
+                        </span>
+                    <span class="link-title">Home</span>
+                </a>
+                <a href="#" class="link">
+                        <span class="link-icon">
+                            <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="192"
+                                    height="192"
+                                    fill="currentColor"
+                                    viewBox="0 0 256 256"
+                            >
+                            <rect width="256" height="256" fill="none"></rect>
+                            <path
+                                    d="M45.42853,176.99811A95.95978,95.95978,0,1,1,79.00228,210.5717l.00023-.001L45.84594,220.044a8,8,0,0,1-9.89-9.89l9.47331-33.15657Z"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="16"
+                            ></path>
+                            <line
+                                    x1="96"
+                                    y1="112"
+                                    x2="160"
+                                    y2="112"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="16"
+                            ></line>
+                            <line
+                                    x1="96"
+                                    y1="144"
+                                    x2="160"
+                                    y2="144"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="16"
+                            ></line>
+                            </svg>
+                        </span>
+                    <span class="link-title">Chat</span>
+                </a>
+                <div class="container-search mt-1">
+                    <input type="text" name="text" class="input" required="" placeholder="Type to search..."
+                           ng-model="searchKeyword" ng-change="search()">
+                    <div class="icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512">
+                            <title>Search</title>
+                            <path d="M221.09 64a157.09 157.09 0 10157.09 157.09A157.1 157.1 0 00221.09 64z" fill="none"
+                                  stroke="currentColor" stroke-miterlimit="10" stroke-width="32"></path>
+                            <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10"
+                                  stroke-width="32" d="M338.29 338.29L448 448"></path>
+                        </svg>
+                    </div>
+                </div>
+                <a href="#" class="link" data-bs-toggle="modal" data-bs-target="#editProfileModal">
+                        <span class="link-icon">
+                            <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="192"
+                                    height="192"
+                                    fill="currentColor"
+                                    viewBox="0 0 256 256"
+                            >
+                            <rect width="256" height="256" fill="none"></rect>
+                            <circle
+                                    cx="128"
+                                    cy="96"
+                                    r="64"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-miterlimit="10"
+                                    stroke-width="16"
+                            ></circle>
+                            <path
+                                    d="M30.989,215.99064a112.03731,112.03731,0,0,1,194.02311.002"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="16"
+                            ></path>
+                            </svg>
+                        </span>
+                    <span class="link-title">Profile</span>
+                </a>
+                <a href="/auth/logout" class="button-logout mt-1 ms-1">
+                    <button class="Btn">
+                        <div class="sign">
+                            <svg viewBox="0 0 512 512">
+                                <path d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"></path>
+                            </svg>
+                        </div>
+                        <div class="text">Logout</div>
+                    </button>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div ng-view></div>
+</article>
+    <!-- Modal Edit Profile Start -->
+
+    <div class="modal fade" id="editProfileModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Chỉnh Sửa Thông Tin Cá Nhân</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form th:action="@{/profile/update}" method="post">
+                        <input type="hidden" name="id"/>
+
+                        <!-- ID (Chỉ hiển thị) -->
+                        <div class="mb-3">
+                            <label class="form-label">ID:</label>
+                            <p class="form-control-plaintext"></p>
+                        </div>
+
+                        <!-- Password -->
+                        <div class="mb-3">
+                            <label class="form-label">Mật khẩu:</label>
+                            <input type="password" class="form-control" name="password" placeholder="Nhập mật khẩu mới">
+                        </div>
+
+                        <!-- Email -->
+                        <div class="mb-3">
+                            <label class="form-label">Email:</label>
+                            <input type="email" class="form-control" name="email" required>
+                        </div>
+
+                        <!-- Họ Tên -->
+                        <div class="mb-3">
+                            <label class="form-label">Họ và Tên:</label>
+                            <input type="text" class="form-control" name="fullName" required>
+                        </div>
+
+                        <!-- Nút Lưu -->
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-success">Lưu Thay Đổi</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Search Start -->
+    <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-fullscreen">
+            <div class="modal-content rounded-0">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Search by keyword</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body d-flex align-items-center">
+                    <div class="input-group w-75 mx-auto d-flex">
+                        <input type="search" class="form-control p-3" placeholder="keywords"
+                               aria-describedby="search-icon-1">
+                        <span id="search-icon-1" class="input-group-text p-3"><i class="fa fa-search"></i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Search End -->
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-primary border-3 border-primary rounded-circle back-to-top"><i
+            class="fa fa-arrow-up"></i></a>
+
+
+    <!-- JavaScript Libraries -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/lib/easing/easing.min.js"></script>
+    <script src="/lib/waypoints/waypoints.min.js"></script>
+    <script src="/lib/lightbox/js/lightbox.min.js"></script>
+    <script src="/lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+    <!-- Template Javascript -->
+    <script src="/js/main.js"></script>
+    <script src="/js/service/pagination-service.js"></script>
+    <script src="/js/admin/admin-app.js"></script>
+    <script src="/js/admin/product.js"></script>
+    <script src="/js/admin/category.js"></script>
+    <script src="/js/admin/user.js"></script>
+    <script src="/js/admin/home-admin.js"></script>
+    <script src="/js/admin/order.js"></script>
+
+
+</body>
+
+</html>

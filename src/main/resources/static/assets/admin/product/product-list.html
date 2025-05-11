@@ -1,0 +1,92 @@
+<!-- Product List Content -->
+<div id="productList">
+  <div class="card border-0 ">
+    <div class="card-body">
+      <div class="table-responsive text-nowrap">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>
+                <a href="" ng-click="sortBy('id')">ID
+                  <span ng-show="sortColumn === 'id'">{{ reverse ? '🔽' : '🔼' }}</span>
+                </a>
+              </th>
+              <th>
+                <a href="" ng-click="sortBy('category.id')">Category
+                  <span ng-show="sortColumn === 'category.id'">{{ reverse ? '🔽' : '🔼' }}</span>
+                </a>
+              </th>
+              <th>
+                <a href="" ng-click="sortBy('name')">Name
+                  <span ng-show="sortColumn === 'name'">{{ reverse ? '🔽' : '🔼' }}</span>
+                </a>
+              </th>
+              <th>
+                <a href="" ng-click="sortBy('price')">Price
+                  <span ng-show="sortColumn === 'price'">{{ reverse ? '🔽' : '🔼' }}</span>
+                </a>
+              </th>
+              <th>
+                <a href="" ng-click="sortBy('createDate')">Date
+                  <span ng-show="sortColumn === 'createDate'">{{ reverse ? '🔽' : '🔼' }}</span>
+                </a>
+              </th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody class="table-border-bottom-0">
+            <tr ng-repeat="pro in pager.pagedItems">
+              <td>{{pro.id}}</td>
+              <td>{{pro.category.name}}</td>
+              <td>{{pro.name}}</td>
+              <td>{{pro.price}}</td>
+              <td>{{pro.createDate}}</td>
+              <td>
+                <div class="dropup"> <!-- Thêm lớp dropup -->
+                  <button type="button" class="btn btn-link btn-sm text-dark p-0" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fas fa-ellipsis-v"></i>
+                  </button>
+                  <ul class="dropdown-menu dropdown-menu-end">
+                    <li><a class="dropdown-item" href="#!/products/edit/{{pro.id}}" ng-click="edit(pro.id)"><i class="bx bx-edit-alt me-1"></i> Edit</a></li>
+                    <li><a class="dropdown-item" href="" ng-click="delete(pro.id)"><i class="bx bx-trash me-1"></i> Delete</a></li>
+                  </ul>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <!--Pagination Start-->
+
+        <ul class="pagination pagination-sm d-flex justify-content-center">
+          <li class="page-item">
+            <a class="page-link" href="" ng-click="pager.first()">
+              <i class="fas fa-angle-double-left"></i>
+            </a>
+          </li>
+          <li class="page-item">
+            <a class="page-link" href="" ng-click="pager.previous()">
+              <i class="fas fa-angle-left"></i>
+            </a>
+          </li>
+          <li class="page-item disabled">
+            <a class="page-link bg-light text-dark fw-bold">
+              {{ pager.page + 1 }} / {{ pager.count }}
+            </a>
+          </li>
+          <li class="page-item">
+            <a class="page-link" href="" ng-click="pager.next()">
+              <i class="fas fa-angle-right"></i>
+            </a>
+          </li>
+          <li class="page-item">
+            <a class="page-link" href="" ng-click="pager.last()">
+              <i class="fas fa-angle-double-right"></i>
+            </a>
+          </li>
+        </ul>
+
+        <!--Pagination End-->
+      </div>
+    </div>
+  </div>
+</div>

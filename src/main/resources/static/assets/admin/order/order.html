@@ -1,0 +1,210 @@
+<!-- Order List Content -->
+<div id="orderList">
+    <div class="card border-0 ">
+        <div class="card-body">
+            <!-- <select class="form-select bg-primary text-light border-0 shadow-sm" aria-label="Order status select">
+                <option value="pending" class="bg-white text-dark" selected>
+                    <i class="fas fa-clock"></i> Pending
+                </option>
+                <option value="shipped" class="bg-white text-dark">
+                    <i class="fas fa-shipping-fast"></i> Shipped
+                </option>
+                <option value="delivered" class="bg-white text-dark">
+                    <i class="fas fa-check-circle"></i> Delivered
+                </option>
+                <option value="canceled" class="bg-white text-dark">
+                    <i class="fas fa-times-circle"></i> Canceled
+                </option>
+            </select> -->
+
+            <div class="table-responsive text-nowrap">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>
+                            <a href="" ng-click="sortBy('status')">Status
+                                <span ng-show="sortColumn === 'status'">{{ reverse ? '🔽' : '🔼' }}</span>
+                            </a>
+                        </th>
+                        <th>
+                            <a href="" ng-click="sortBy('id')">Order ID
+                                <span ng-show="sortColumn === 'id'">{{ reverse ? '🔽' : '🔼' }}</span>
+                            </a>
+                        </th>
+                        <th>
+                            <a href="" ng-click="sortBy('user.username')">Username
+                                <span ng-show="sortColumn === 'user.username'">{{ reverse ? '🔽' : '🔼' }}</span>
+                            </a>
+                        </th>
+                        <th>
+                            <a href="" ng-click="sortBy('createDate')">Order Date
+                                <span ng-show="sortColumn === 'createDate'">{{ reverse ? '🔽' : '🔼' }}</span>
+                            </a>
+                        </th>
+                        <th>
+                            <a href="" ng-click="sortBy('total')">Total Price
+                                <span ng-show="sortColumn === 'total'">{{ reverse ? '🔽' : '🔼' }}</span>
+                            </a>
+                        </th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody class="table-border-bottom-0">
+                        <tr ng-repeat="order in pager.pagedItems">
+                            <td>
+                              <span class="badge" ng-class="getStatusClass(order.status)">
+                                {{ order.status }}
+                              </span>
+                            </td>
+                            <td>{{order.id}}</td>
+                            <td>{{order.user.username}}</td>
+                            <td>{{order.createDate}}</td>
+                            <td>{{order.total | currency:'VND ':0}}</td>
+                            <td>
+                                <button class="cssbuttons-io-button" ng-click="edit(order.id)"
+                                        data-bs-toggle="modal" data-bs-target="#editOrderModal">
+                                    Edit
+                                    <div class="icon">
+                                        <svg
+                                                height="24"
+                                                width="24"
+                                                viewBox="0 0 24 24"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                        >
+                                            <path d="M0 0h24v24H0z" fill="none"></path>
+                                            <path
+                                                    d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z"
+                                                    fill="currentColor"
+                                            ></path>
+                                        </svg>
+                                    </div>
+                                </button>
+                            </td>
+
+                        </tr>
+                    </tbody>
+                </table>
+                <!--Pagination Start-->
+
+                <ul class="pagination pagination-sm d-flex justify-content-center">
+                    <li class="page-item">
+                        <a class="page-link" href="" ng-click="pager.first()">
+                            <i class="fas fa-angle-double-left"></i>
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="" ng-click="pager.previous()">
+                            <i class="fas fa-angle-left"></i>
+                        </a>
+                    </li>
+                    <li class="page-item disabled">
+                        <a class="page-link bg-light text-dark fw-bold">
+                            {{ pager.page + 1 }} / {{ pager.count }}
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="" ng-click="pager.next()">
+                            <i class="fas fa-angle-right"></i>
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="" ng-click="pager.last()">
+                            <i class="fas fa-angle-double-right"></i>
+                        </a>
+                    </li>
+                </ul>
+
+
+                <!--Pagination End-->
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Edit Modal Order Start -->
+
+<div class="modal fade" id="editOrderModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Chỉnh Sửa Đơn Hàng</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post">
+                    <input type="hidden" name="orderId"/>
+
+                    <!-- Thông tin chung -->
+                    <div class="row">
+                        <div class="mb-3 col-sm-6 d-flex align-items-center gap-2">
+                            <label class="form-label text-nowrap mb-0">Order ID:</label>
+                            <p class="form-control-plaintext">{{form.id}}</p>
+                        </div>
+
+                        <div class="mb-3 col-sm-6 d-flex align-items-center gap-1">
+                            <label class="form-label text-nowrap mb-0">User ID:</label>
+                            <p class="form-control-plaintext" >{{form.user.username}}</p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="mb-3 col-sm-6 d-flex align-items-center gap-2">
+                            <label class="form-label text-nowrap mb-0">Order Date:</label>
+                            <p class="form-control-plaintext ">{{form.createDate}}</p>
+                        </div>
+
+                        <div class="mb-3 col-sm-6 d-flex align-items-center gap-2">
+                            <label class="form-label text-nowrap mb-0">Address:</label>
+                            <p class="form-control-plaintext ">{{form.address}}</p>
+                        </div>
+                    </div>
+
+
+                    <!-- Trạng thái đơn hàng -->
+                    <div class="mb-3">
+                        <label class="form-label">Status:</label>
+                        <select class="form-select" name="status" ng-model="form.status">
+                            <option
+                                    ng-repeat="status in statusOptions"
+                                    ng-if="status === originalStatus || getAllowedStatuses(originalStatus).includes(status)"
+                                    value="{{status}}">
+                                {{status}}
+                            </option>
+                        </select>
+                    </div>
+
+
+                    <!-- Danh sách sản phẩm -->
+                    <h5 class="mt-4">Chi Tiết Đơn Hàng</h5>
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th>Tên Sản Phẩm</th>
+                            <th>Giá</th>
+                            <th>Số Lượng</th>
+                            <th>Tổng</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="od in form.orderDetails">
+                                <td >{{od.product.name}}</td>
+                                <td>{{od.price}}</td>
+                                <td>{{od.quantity}}</td>
+                                <td >{{od.quantity * od.price}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+<!--                    <p>Phí giao hàng: <span>25.000</span> VND</p>-->
+                    <h4 class="text-end">Tổng Cộng: <span >{{form.total}}</span> VND</h4>
+
+                    <!-- Nút điều khiển -->
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" ng-click="update()">Lưu</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
